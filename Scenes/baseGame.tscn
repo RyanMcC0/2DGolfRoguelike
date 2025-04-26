@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0gsvqnsn458l"]
+
+[ext_resource type="PackedScene" uid="uid://cdhi7mywb4h4i" path="res://Scenes/World.tscn" id="1_y1tut"]
+[ext_resource type="Script" uid="uid://bregscuacpl53" path="res://Assets/Scripts/test_control.gd" id="2_oc7fn"]
+
+[node name="Base" type="Node2D"]
+
+[node name="World" parent="." instance=ExtResource("1_y1tut")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(577, 324)
+script = ExtResource("2_oc7fn")
