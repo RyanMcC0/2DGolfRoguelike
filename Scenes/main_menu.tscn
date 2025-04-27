@@ -1,0 +1,115 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwmyosirwhwtt"]
+
+[ext_resource type="Script" uid="uid://cl5ndaycs7rxy" path="res://Assets/Scripts/main_menu.gd" id="1_n45e2"]
+[ext_resource type="Texture2D" uid="uid://hcm61unecplb" path="res://Assets/Main_Menu_Assets/Background.png" id="2_cp0ys"]
+[ext_resource type="Texture2D" uid="uid://vpnylj56y3x6" path="res://Assets/Main_Menu_Assets/New_Grass_Button.png" id="3_n45e2"]
+[ext_resource type="FontFile" uid="uid://44641v2lbe2c" path="res://Assets/Fonts/lunchds.ttf" id="4_opfnp"]
+[ext_resource type="Texture2D" uid="uid://u6bknkosky6p" path="res://Assets/Main_Menu_Assets/Button_Grass_No_Flag_No_Ball.png" id="5_opfnp"]
+[ext_resource type="AudioStream" uid="uid://dh63ou5lv4ri6" path="res://Assets/Main_Menu_Assets/SFX/HoverSfx.wav" id="6_cp0ys"]
+[ext_resource type="AudioStream" uid="uid://dovivqiqeexul" path="res://Assets/Main_Menu_Assets/SFX/ClickSfx.wav" id="7_yhxw7"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n45e2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_cp0ys")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 130.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Vbox" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnStart" type="TextureButton" parent="CenterContainer/Vbox"]
+layout_mode = 2
+tooltip_text = "
+"
+texture_normal = ExtResource("3_n45e2")
+
+[node name="Label" type="Label" parent="CenterContainer/Vbox/BtnStart"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.886275, 0.792157, 0.592157, 1)
+theme_override_fonts/font = ExtResource("4_opfnp")
+theme_override_font_sizes/font_size = 40
+text = "Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnOptions" type="TextureButton" parent="CenterContainer/Vbox"]
+layout_mode = 2
+texture_normal = ExtResource("5_opfnp")
+
+[node name="Label" type="Label" parent="CenterContainer/Vbox/BtnOptions"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.886275, 0.792157, 0.592157, 1)
+theme_override_fonts/font = ExtResource("4_opfnp")
+theme_override_font_sizes/font_size = 40
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnExit" type="TextureButton" parent="CenterContainer/Vbox"]
+layout_mode = 2
+texture_normal = ExtResource("5_opfnp")
+
+[node name="Label" type="Label" parent="CenterContainer/Vbox/BtnExit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.886275, 0.792157, 0.592157, 1)
+theme_override_fonts/font = ExtResource("4_opfnp")
+theme_override_font_sizes/font_size = 40
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SfxHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_cp0ys")
+volume_db = -23.0
+
+[node name="SfxClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_yhxw7")
+volume_db = -12.0
+
+[connection signal="mouse_entered" from="CenterContainer/Vbox/BtnStart" to="." method="_on_btn_start_mouse_entered"]
+[connection signal="mouse_exited" from="CenterContainer/Vbox/BtnStart" to="." method="_on_btn_start_mouse_exited"]
+[connection signal="pressed" from="CenterContainer/Vbox/BtnStart" to="." method="_on_btn_start_pressed"]
+[connection signal="mouse_entered" from="CenterContainer/Vbox/BtnOptions" to="." method="_on_btn_options_mouse_entered"]
+[connection signal="mouse_exited" from="CenterContainer/Vbox/BtnOptions" to="." method="_on_btn_options_mouse_exited"]
+[connection signal="pressed" from="CenterContainer/Vbox/BtnOptions" to="." method="_on_btn_options_pressed"]
+[connection signal="mouse_entered" from="CenterContainer/Vbox/BtnExit" to="." method="_on_btn_exit_mouse_entered"]
+[connection signal="mouse_exited" from="CenterContainer/Vbox/BtnExit" to="." method="_on_btn_exit_mouse_exited"]
+[connection signal="pressed" from="CenterContainer/Vbox/BtnExit" to="." method="_on_btn_exit_pressed"]

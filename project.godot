@@ -11,6 +11,6 @@ config_version=5
 [application]
 
 config/name="2DGolfRogueLike"
-run/main_scene="uid://d0gsvqnsn458l"
+run/main_scene="uid://dwmyosirwhwtt"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Assets/SVGs/icon.svg"
