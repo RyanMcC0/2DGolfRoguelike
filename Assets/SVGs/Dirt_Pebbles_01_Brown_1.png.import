@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rooe1gejpgje"
-path="res://.godot/imported/icon.svg-ca2ea15f110670070a43a4c7e61878e5.ctex"
+uid="uid://dpyrfcy5hscel"
+path="res://.godot/imported/Dirt_Pebbles_01_Brown_1.png-6d42178aca594a2e3c9766c8085da087.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/SVGs/icon.svg"
-dest_files=["res://.godot/imported/icon.svg-ca2ea15f110670070a43a4c7e61878e5.ctex"]
+source_file="res://Assets/SVGs/Dirt_Pebbles_01_Brown_1.png"
+dest_files=["res://.godot/imported/Dirt_Pebbles_01_Brown_1.png-6d42178aca594a2e3c9766c8085da087.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

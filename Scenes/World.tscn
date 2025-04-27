@@ -4,12 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://ciigi6jkp38ws" path="res://Assets/SVGs/golf_flag-Sheet.svg" id="2_5nsto"]
 [ext_resource type="Texture2D" uid="uid://lk0jwtrtphjl" path="res://Assets/SVGs/testTileSet-Sheet.svg" id="2_j0p05"]
 [ext_resource type="Shader" uid="uid://ct8jgk6tk5m77" path="res://Assets/TextureOverlay.gdshader" id="2_p70al"]
-[ext_resource type="Texture2D" uid="uid://bbswkclubom3s" path="res://Assets/SVGs/dirtTexture.png" id="3_p70al"]
+[ext_resource type="Texture2D" uid="uid://dpyrfcy5hscel" path="res://Assets/SVGs/Dirt_Pebbles_01_Brown_1.png" id="3_p70al"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p70al"]
 shader = ExtResource("2_p70al")
 shader_parameter/overlay_tex = ExtResource("3_p70al")
-shader_parameter/scale = 0.007
+shader_parameter/scale = 0.00694444
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p70al"]
 texture = ExtResource("2_j0p05")
