@@ -3,10 +3,13 @@ extends Control
 #grab audioplayers
 @onready var hover_sfx = $SfxHover
 @onready var click_sfx = $SfxClick
+@onready var music = $MenuMusic
 
 func _on_btn_start_pressed() -> void:
 	$CenterContainer/Vbox/BtnStart.scale = Vector2(1, 1)
 	click_sfx.play()
+	var tween = create_tween()
+	tween.tween_property(music, "volume_db", -80, 0.5)
 	await get_tree().create_timer(0.2).timeout
 	get_tree().change_scene_to_file("res://Scenes/baseGame.tscn")
 
