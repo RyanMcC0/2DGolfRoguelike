@@ -4,17 +4,16 @@ extends Node2D
 const LEVEL_WIDTH = 1000
 const HEIGHT_OFFSET = 110
 const NOISE_ZOOM = 0.1
-const AMPLITUDE = 200
-const WATER_LEVEL = 20
+const AMPLITUDE = 100
+const WATER_LEVEL = 30
 const MAX_MAP_HEIGHT = 150
-
 
 @export var genWorld:bool = false
 var noise = FastNoiseLite.new()
 var heightmap = []
 
 func _ready():
-	noise.seed = randi()  # Randomize the noise seed # -48441400 for a test default
+	noise.seed = randi() # Randomize the noise seed # -48441400 for a test default
 	if genWorld:
 		clear_level()
 		generate_level()
@@ -86,9 +85,9 @@ func draw_level() -> void:
 			# Check for dirt-to-water transitions
 			if current_tile == Vector2i(1, 0):  # Dirt tile
 				if left_tile == Vector2i(2, 0):  # Water on the left
-					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(8, 0))  # Replace with your left water slant tile index
+					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(7, 0))  # Replace with your left water slant tile index
 				elif right_tile == Vector2i(2, 0):  # Water on the right
-					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(7, 0))  # Replace with your right water slant tile index
+					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(8, 0))  # Replace with your right water slant tile index
 
 	# Remove tiles directly above the water level and slanted dirt-to-water tiles
 	for x in range(heightmap.size()):
@@ -106,18 +105,14 @@ func draw_level() -> void:
 					tilemap.set_cell(Vector2i(x,water_surface_y - 1), 0, Vector2i(4,0))
 				else:
 					tilemap.set_cell(Vector2i(x,water_surface_y - 1), 0, Vector2i(3,0))
+
+	var holeX = heightmap.size()-20
+	draw_prefab_end(Vector2i(holeX,heightmap[holeX] - 8))
+
 func clear_level() -> void:
 	var tilemap:TileMapLayer = $LevelForeground  # Reference your TileMap node
 	tilemap.clear()
 	heightmap.clear()
-
-func create_noise_image(width: int, height: int, pixel_scale: float = 0.05) -> Image:
-	var img = Image.create(width, height, false, Image.FORMAT_RF)
-	for y in range(height):
-		for x in range(width):
-			var n = noise.get_noise_2d(x * pixel_scale, y * pixel_scale) * 0.5 + 0.5
-			img.set_pixel(x, y, Color(n, n, n))
-	return img
 
 func apply_post_process() -> void:
 	# Render the TileMap to an image and assign it to a child Sprite
@@ -126,8 +121,9 @@ func apply_post_process() -> void:
 func draw_prefab_start() -> void:
 	pass
 
-func draw_prefab_end() -> void:
-	pass
+func draw_prefab_end(holeLocation:Vector2i) -> void:
+	var prefabTilemap:TileMapLayer = $LevelPrefabs
+	prefabTilemap.set_cell(holeLocation,0,Vector2i(0,0))
 
 func draw_background() -> void:
 	pass
