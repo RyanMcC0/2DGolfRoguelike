@@ -148,4 +148,24 @@ func draw_prefab_end(holeLocation:Vector2i) -> void:
 	prefabTilemap.set_cell(holeLocation,0,Vector2i(0,0))
 
 func draw_background() -> void:
-	pass
+	var backgroundTilemap:TileMapLayer = $LevelBackground 
+	for x in range(LEVEL_WIDTH):
+		var ground_y = heightmap[x]
+		for y in range(MAX_MAP_HEIGHT):
+			var tile_type = 0  # 0 = sky, 1 = underground, 2 = underwater
+
+			if y < ground_y:
+				tile_type = 0  # Sky
+			elif y >= MAX_MAP_HEIGHT - WATER_LEVEL:
+				tile_type = 2  # Underwater
+			else:
+				tile_type = 1  # Underground
+
+			# Set background tile based on type
+			match tile_type:
+				0:
+					backgroundTilemap.set_cell(Vector2i(x, y), 0, Vector2i(0, 0))  # Sky background
+				1:
+					backgroundTilemap.set_cell(Vector2i(x, y), 0, Vector2i(1, 0))  # Underground background currently same as underwater
+				2:
+					backgroundTilemap.set_cell(Vector2i(x, y), 0, Vector2i(1, 0))  # Underwater background

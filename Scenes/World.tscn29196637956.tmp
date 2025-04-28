@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cdhi7mywb4h4i"]
+[gd_scene load_steps=12 format=3 uid="uid://cdhi7mywb4h4i"]
 
 [ext_resource type="Script" uid="uid://jbecqh2tj5p5" path="res://Assets/Scripts/WorldGeneration.gd" id="1_5cjrv"]
 [ext_resource type="Texture2D" uid="uid://ciigi6jkp38ws" path="res://Assets/SVGs/golf_flag-Sheet.svg" id="2_5nsto"]
@@ -37,8 +37,6 @@ separation = Vector2i(5, 0)
 [sub_resource type="TileSet" id="TileSet_5nsto"]
 sources/0 = SubResource("TileSetAtlasSource_p70al")
 
-[sub_resource type="TileSet" id="TileSet_45d1s"]
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gjpho"]
 texture = ExtResource("2_5nsto")
 margins = Vector2i(8, 0)
@@ -63,7 +61,6 @@ material = SubResource("ShaderMaterial_p70al")
 tile_set = SubResource("TileSet_5nsto")
 
 [node name="LevelBackground" type="TileMapLayer" parent="."]
-tile_set = SubResource("TileSet_45d1s")
 
 [node name="LevelPrefabs" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_p70al")
