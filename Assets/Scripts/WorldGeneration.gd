@@ -9,6 +9,7 @@ const WATER_LEVEL = 30
 const MAX_MAP_HEIGHT = 150
 
 @export var genWorld:bool = false
+@export var backgroundTilemap:Node2D
 var noise = FastNoiseLite.new()
 var heightmap = []
 
@@ -19,7 +20,7 @@ func _ready():
 		generate_level()
 		draw_level()
 		draw_background()
-		apply_post_process()
+		draw_collider()
 		genWorld = false
 
 func generate_level() -> void:
@@ -136,10 +137,6 @@ func clear_level() -> void:
 	tilemap.clear()
 	heightmap.clear()
 
-func apply_post_process() -> void:
-	# Render the TileMap to an image and assign it to a child Sprite
-	pass
-
 func draw_prefab_start() -> void:
 	pass
 
@@ -148,24 +145,50 @@ func draw_prefab_end(holeLocation:Vector2i) -> void:
 	prefabTilemap.set_cell(holeLocation,0,Vector2i(0,0))
 
 func draw_background() -> void:
-	var backgroundTilemap:TileMapLayer = $LevelBackground 
+	var backgroundLayer = backgroundTilemap.get_child(0) 
 	for x in range(LEVEL_WIDTH):
 		var ground_y = heightmap[x]
 		for y in range(MAX_MAP_HEIGHT):
 			var tile_type = 0  # 0 = sky, 1 = underground, 2 = underwater
 
-			if y < ground_y:
-				tile_type = 0  # Sky
-			elif y >= MAX_MAP_HEIGHT - WATER_LEVEL:
-				tile_type = 2  # Underwater
+			if y < ground_y + 1 and y < (MAX_MAP_HEIGHT - WATER_LEVEL):
+				tile_type = 0  # Sky			
 			else:
 				tile_type = 1  # Underground
 
 			# Set background tile based on type
 			match tile_type:
 				0:
-					backgroundTilemap.set_cell(Vector2i(x, y), 0, Vector2i(0, 0))  # Sky background
+					backgroundLayer.set_cell(Vector2i(x, y), 0, Vector2i(-1, 0))  # Above water background
 				1:
-					backgroundTilemap.set_cell(Vector2i(x, y), 0, Vector2i(1, 0))  # Underground background currently same as underwater
+					backgroundLayer.set_cell(Vector2i(x, y), 0, Vector2i(0, 0))  # Underground background currently same as underwater
 				2:
-					backgroundTilemap.set_cell(Vector2i(x, y), 0, Vector2i(1, 0))  # Underwater background
+					backgroundLayer.set_cell(Vector2i(x, y), 0, Vector2i(1, 0))  # Underwater background
+
+func draw_collider() -> void: #Draw collision shape on draw of level
+	#Draw collision polygon
+	var floorCollider:CollisionPolygon2D = $LevelForeground/CollisionPolygon2D
+	# Build the floor collider polygon from the heightmap
+	var points = []
+	# Start from the left bottom
+	points.append(Vector2i(0, MAX_MAP_HEIGHT))
+	# Go along the surface
+	for x in range(heightmap.size()):
+		var current_height = heightmap[x]
+		if x > 0:
+			var previous_height = heightmap[x - 1]
+			# Lower the height by 1 if there is an increase in gradient
+			if current_height < previous_height:
+				current_height += 1
+		points.append(Vector2i(x, clamp(current_height, -9999, MAX_MAP_HEIGHT - 1)))
+	# End at the right bottom
+	points.append(Vector2i(heightmap.size() - 1, MAX_MAP_HEIGHT))
+	# Close the polygon
+	points.append(Vector2i(0, MAX_MAP_HEIGHT))
+	
+		 # Scale points to match TileMap cell size if needed
+	var cell_size = $LevelForeground.tile_set.tile_size if $LevelForeground.tile_set else Vector2(1, 1)
+	for i in range(points.size()):
+		points[i] *= cell_size
+	
+	floorCollider.polygon = points

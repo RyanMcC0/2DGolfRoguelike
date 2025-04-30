@@ -19,12 +19,12 @@ void fragment() {
 	float mix_amount_dirt = floor(COLOR.r);
 	float mix_amount_water = floor(COLOR.b);
 	float mix_amount_grass = floor(COLOR.g);
-	
+
 	// sample the overlay_tex using worldPos
 	vec4 overlay_color_dirt = texture(overlay_tex_dirt, world_position * scale_dirt);
 	vec4 overlay_color_grass = texture(overlay_tex_grass, world_position * scale_grass);
 	vec4 overlay_color_water = texture(overlay_tex_water, world_position * scale_water);
-	
+
 	// combine original color and overlay color together
 	COLOR = mix(COLOR, overlay_color_dirt, mix_amount_dirt);
 	COLOR = mix(COLOR, overlay_color_water, mix_amount_water);
