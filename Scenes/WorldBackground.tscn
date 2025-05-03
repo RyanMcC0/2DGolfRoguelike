@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://ddd0im6qsmq5y"]
+
+[ext_resource type="Shader" uid="uid://ct8jgk6tk5m77" path="res://Assets/TextureOverlay.gdshader" id="1_1lao1"]
+[ext_resource type="Texture2D" uid="uid://dfjcnk8selyqk" path="res://Assets/SVGs/tileset_bkgnd-Sheet.png" id="1_vibxp"]
+[ext_resource type="Texture2D" uid="uid://ckk6dcf2bpdvo" path="res://Assets/SVGs/Dirt_Cracked_02_Brown_1.png" id="2_1lao1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cyp3m"]
+shader = ExtResource("1_1lao1")
+shader_parameter/overlay_tex_dirt = ExtResource("2_1lao1")
+shader_parameter/scale_dirt = 0.00694444
+shader_parameter/scale_water = 0.00694444
+shader_parameter/scale_grass = 0.00694444
+shader_parameter/difference = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t0vcu"]
+texture = ExtResource("1_vibxp")
+separation = Vector2i(5, 0)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_nd7go"]
+sources/0 = SubResource("TileSetAtlasSource_t0vcu")
+
+[node name="WorldBackground" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+material = SubResource("ShaderMaterial_cyp3m")
+tile_set = SubResource("TileSet_nd7go")
