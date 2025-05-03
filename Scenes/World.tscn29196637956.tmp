@@ -20,26 +20,31 @@ shader_parameter/difference = 0.0
 texture = ExtResource("2_j0p05")
 separation = Vector2i(5, 0)
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 2:0/0 = 0
 3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 4, -4, 4, 4, -4, 4)
 4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 0, 0, 4, 4, -4, 4)
 5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 7:0/0 = 0
-9:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 4, -4, 4, 4, -4, 4)
 8:0/0 = 0
-10:0/0 = 0
-11:0/0 = 0
-12:0/0 = 0
-13:0/0 = 0
+8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 0, 0, 4, 4, -4, 4)
 
 [sub_resource type="TileSet" id="TileSet_5nsto"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 2
 sources/0 = SubResource("TileSetAtlasSource_p70al")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gjpho"]
 texture = ExtResource("2_5nsto")
-margins = Vector2i(8, 0)
+margins = Vector2i(8, 8)
 separation = Vector2i(22, 0)
 texture_region_size = Vector2i(42, 120)
 0:0/animation_frame_0/duration = 0.15

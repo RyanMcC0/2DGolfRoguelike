@@ -8,8 +8,21 @@
 
 [node name="WorldBackground" parent="." instance=ExtResource("3_wvy3b")]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(576, 324)
+[node name="Ball" type="RigidBody2D" parent="."]
+position = Vector2(346, 384)
+collision_mask = 2
+input_pickable = true
+mass = 0.2
+script = ExtResource("2_g1nqv")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+texture = ExtResource("3_cmq3p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_0a4jf")
+
+[node name="Camera2D" type="Camera2D" parent="Ball"]
 script = ExtResource("2_oc7fn")
 
 [node name="WorldForeground" parent="." node_paths=PackedStringArray("backgroundTilemap") instance=ExtResource("1_y1tut")]
