@@ -86,9 +86,9 @@ func draw_level() -> void:
 			# Check for dirt-to-water transitions
 			if current_tile == Vector2i(1, 0):  # Dirt tile
 				if left_tile == Vector2i(2, 0):  # Water on the left
-					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(8, 0))  # Replace with your left water slant tile index
+					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(14, 0))  # Replace with your left water slant tile index
 				elif right_tile == Vector2i(2, 0):  # Water on the right
-					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(7, 0))  # Replace with your right water slant tile index
+					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(15, 0))  # Replace with your right water slant tile index
 
 	# Remove tiles directly above the water level and slanted dirt-to-water tiles
 	for x in range(heightmap.size()):
@@ -99,7 +99,7 @@ func draw_level() -> void:
 		if tile_state in [Vector2i(2, 0)]:
 			if tilemap.get_cell_atlas_coords(above_tile_coords) != null:
 				tilemap.set_cell(above_tile_coords, 0, Vector2i(-1,-1))  # Remove the tile directly above
-		elif tile_state in  [Vector2i(7, 0), Vector2i(8, 0)]:
+		elif tile_state in  [Vector2i(14, 0), Vector2i(15, 0)]:
 			tilemap.set_cell(Vector2i(x,water_surface_y), 0, Vector2i(1,0))  # Remove the tile directly above
 			if tilemap.get_cell_atlas_coords(Vector2i(x,water_surface_y - 1)) == Vector2i(0,0):
 				if tilemap.get_cell_atlas_coords(Vector2i(x - 1,water_surface_y)) == Vector2i(1,0):
@@ -114,6 +114,11 @@ func draw_level() -> void:
 			var above_tile = tilemap.get_cell_atlas_coords(Vector2i(x, y - 1))
 			if current_tile == Vector2i(1, 0) and above_tile == Vector2i(0, 0):  # Replace with your dirt and grass tile indices
 				tilemap.set_cell(Vector2i(x, y), 0, Vector2i(9, 0))  # Replace with your dirt connector block index
+			if current_tile == Vector2i(1,0) and (above_tile == Vector2i(3,0) or above_tile == Vector2i(4,0)):
+				if above_tile == Vector2i(3,0):
+					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(19, 0))
+				else:
+					tilemap.set_cell(Vector2i(x, y), 0, Vector2i(20, 0))
 	
 	# Add grass detail above solid grass blocks using one of four grass textures
 	for x in range(heightmap.size()):
@@ -127,6 +132,15 @@ func draw_level() -> void:
 					# Randomly select one of four grass detail textures (atlas coords: (10,0), (11,0), (12,0), (13,0))
 					var grass_variant = randi() % 4
 					tilemap.set_cell(above_pos, 0, Vector2i(10 + grass_variant, 0))
+	
+	# Replace dirt blocks with a water block directly above with a random connective tile (atlas coords: (16,0), (17,0), (18,0))
+	for x in range(heightmap.size()):
+		for y in range(1, MAX_MAP_HEIGHT):  # Start from y=1 to avoid out-of-bounds above
+			var current_tile = tilemap.get_cell_atlas_coords(Vector2i(x, y))
+			var above_tile = tilemap.get_cell_atlas_coords(Vector2i(x, y - 1))
+			if current_tile == Vector2i(1, 0) and above_tile == Vector2i(2, 0):
+				var connective_variant = 16 + (randi() % 3)
+				tilemap.set_cell(Vector2i(x, y), 0, Vector2i(connective_variant, 0))
 
 	# Add a hole in the level for the player to spawn
 	var holeX = heightmap.size()-20
