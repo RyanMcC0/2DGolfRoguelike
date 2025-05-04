@@ -27,8 +27,6 @@ func _physics_process(delta: float) -> void:
 
 # Handles input on actual node... CollisionShape2D here.
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
-	print("_event")
-	print(event)
 	if (linear_velocity.length_squared() > velocity_clamp):  # Prevent dragging if the ball is moving
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -37,8 +35,6 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 		drag_end = drag_start
 
 func _input(event):
-	print("_input")
-	print(event)
 	if (linear_velocity.length_squared() > velocity_clamp):  # Prevent dragging or launching if the ball is moving
 		return
 	if not is_dragging:
