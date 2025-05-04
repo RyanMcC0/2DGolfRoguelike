@@ -1,3 +1,20 @@
-[gd_scene format=3 uid="uid://1b7c2yxuckm1"]
+[gd_scene load_steps=4 format=3 uid="uid://1b7c2yxuckm1"]
 
-[node name="Player" type="Node2D"]
+[ext_resource type="Script" uid="uid://dmh6itjgypbu0" path="res://Assets/Scripts/ball.gd" id="1_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://cw3hjeqdbx2qv" path="res://Assets/SVGs/golf_ball.svg" id="1_rpqav"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
+radius = 11.0
+
+[node name="Player" type="RigidBody2D"]
+collision_mask = 3
+input_pickable = true
+mass = 0.3
+script = ExtResource("1_kyqiw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kyqiw")
+
+[node name="GolfBall" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_rpqav")

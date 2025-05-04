@@ -20,7 +20,7 @@ func _ready():
 		generate_level()
 		draw_level()
 		draw_background()
-		draw_collider()
+		#draw_collider()
 		genWorld = false
 
 func generate_level() -> void:
@@ -181,20 +181,26 @@ func draw_background() -> void:
 
 func draw_collider() -> void: #Draw collision shape on draw of level
 	#Draw collision polygon
-	var floorCollider:CollisionPolygon2D = $LevelForeground/CollisionPolygon2D
+	var floorCollider:CollisionPolygon2D = $LevelForeground/StaticBody2D/CollisionPolygon2D
 	# Build the floor collider polygon from the heightmap
 	var points = []
 	# Start from the left bottom
 	points.append(Vector2i(0, MAX_MAP_HEIGHT))
 	# Go along the surface
 	for x in range(heightmap.size()):
+		var changeByY = 0
+		var changeByX = 0
 		var current_height = heightmap[x]
 		if x > 0:
 			var previous_height = heightmap[x - 1]
 			# Lower the height by 1 if there is an increase in gradient
 			if current_height < previous_height:
-				current_height += 1
-		points.append(Vector2i(x, clamp(current_height, -9999, MAX_MAP_HEIGHT - 1)))
+				changeByY += 1
+			if current_height > (MAX_MAP_HEIGHT - WATER_LEVEL - 1):
+				current_height = MAX_MAP_HEIGHT - WATER_LEVEL + 2
+				changeByY = 0
+			current_height += changeByY
+		points.append(Vector2i(x + changeByX, clamp(current_height, -9999, MAX_MAP_HEIGHT - 1)))
 	# End at the right bottom
 	points.append(Vector2i(heightmap.size() - 1, MAX_MAP_HEIGHT))
 	# Close the polygon

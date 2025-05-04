@@ -6,13 +6,15 @@ var is_dragging = false
 var drag_start = Vector2.ZERO
 var drag_end = Vector2.ZERO
 
+
 func _ready():
 	continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
 	linear_damp = 0.075
 	var mat = PhysicsMaterial.new()
-	mat.friction = 0.0
+	mat.friction = 0.3
 	mat.bounce = 0.4
 	physics_material_override = mat
+	input_pickable = true
 
 # Tuning parameters
 var max_power = 1000  # max launch force
@@ -25,6 +27,8 @@ func _physics_process(delta: float) -> void:
 
 # Handles input on actual node... CollisionShape2D here.
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
+	print("_event")
+	print(event)
 	if (linear_velocity.length_squared() > velocity_clamp):  # Prevent dragging if the ball is moving
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -33,6 +37,8 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 		drag_end = drag_start
 
 func _input(event):
+	print("_input")
+	print(event)
 	if (linear_velocity.length_squared() > velocity_clamp):  # Prevent dragging or launching if the ball is moving
 		return
 	if not is_dragging:
