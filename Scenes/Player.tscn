@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cw3hjeqdbx2qv" path="res://Assets/SVGs/golf_ball.svg" id="1_rpqav"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
-radius = 11.0
+radius = 10.8
 
 [node name="Player" type="RigidBody2D"]
 collision_mask = 3
