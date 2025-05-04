@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd1ywrcccoebd"
-path="res://.godot/imported/Grass_02_Green_3.png-94035bfe0088fbb314e69b97154abf26.ctex"
+uid="uid://cw3hjeqdbx2qv"
+path="res://.godot/imported/golf_ball.svg-0ce102e439ee35f476765f2f0f8af62a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/SVGs/Grass_02_Green_3.png"
-dest_files=["res://.godot/imported/Grass_02_Green_3.png-94035bfe0088fbb314e69b97154abf26.ctex"]
+source_file="res://Assets/SVGs/golf_ball.svg"
+dest_files=["res://.godot/imported/golf_ball.svg-0ce102e439ee35f476765f2f0f8af62a.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
