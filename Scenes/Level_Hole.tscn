@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://w3j36h0ci8s8"]
+
+[ext_resource type="Script" uid="uid://dprfmfrchgvo6" path="res://Assets/Scripts/level_hole.gd" id="1_vcaj4"]
+[ext_resource type="Texture2D" uid="uid://ddog30mpm0mi4" path="res://Assets/Level_Select_Assets/Just_Hole.png" id="2_8e0uw"]
+[ext_resource type="Texture2D" uid="uid://ddph8kdlybpw1" path="res://Assets/Level_Select_Assets/Just_Flag.png" id="3_stux8"]
+
+[sub_resource type="Animation" id="Animation_8e0uw"]
+resource_name = "Flag_Reveal"
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteFlag:region_rect:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mxd64"]
+_data = {
+&"Flag_Reveal": SubResource("Animation_8e0uw")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcaj4"]
+size = Vector2(49, 22)
+
+[node name="LevelHole" type="Node2D"]
+script = ExtResource("1_vcaj4")
+
+[node name="SpriteHole" type="Sprite2D" parent="."]
+texture = ExtResource("2_8e0uw")
+
+[node name="SpriteFlag" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_stux8")
+region_enabled = true
+region_rect = Rect2(0, 76, 34, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_mxd64")
+}
+
+[node name="Hover_Area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hover_Area"]
+position = Vector2(-1.5, 85)
+shape = SubResource("RectangleShape2D_vcaj4")
+one_way_collision_margin = 0.0
+
+[connection signal="mouse_entered" from="Hover_Area" to="." method="_on_hover_area_mouse_entered"]
+[connection signal="mouse_exited" from="Hover_Area" to="." method="_on_hover_area_mouse_exited"]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="2DGolfRogueLike"
-run/main_scene="uid://dwmyosirwhwtt"
+run/main_scene="uid://b5hek0racyd0b"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
 [display]

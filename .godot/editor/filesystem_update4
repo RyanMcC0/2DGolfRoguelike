@@ -1,8 +1,10 @@
-res://Scenes/Player.tscn
 res://Scenes/main_menu.tscn
-res://Scenes/testLevel.tscn
-res://Scenes/WorldBackground.tscn
-res://Scenes/WorldForeground.tscn
-res://Scenes/baseGame.tscn
-res://Assets/Scripts/ball.gd
 res://Assets/Shader/TextureOverlay.gdshader
+res://Scenes/WorldBackground.tscn
+res://Scenes/baseGame.tscn
+res://Scenes/Player.tscn
+res://Scenes/LevelHole.tscn
+res://Assets/Scripts/level_hole.gd
+res://Scenes/Level_Select.tscn
+res://Assets/Scripts/level_select.gd
+res://Scenes/Level_Hole.tscn
