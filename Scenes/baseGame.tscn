@@ -13,6 +13,7 @@
 position = Vector2(145, 27)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2(0, -100)
 script = ExtResource("2_oc7fn")
 
 [node name="WorldForeground" parent="." node_paths=PackedStringArray("backgroundTilemap") instance=ExtResource("1_y1tut")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ddd0im6qsmq5y"]
 
-[ext_resource type="Shader" uid="uid://ct8jgk6tk5m77" path="res://Assets/TextureOverlay.gdshader" id="1_1lao1"]
+[ext_resource type="Shader" uid="uid://ct8jgk6tk5m77" path="res://Assets/Shader/TextureOverlay.gdshader" id="1_1lao1"]
 [ext_resource type="Texture2D" uid="uid://dfjcnk8selyqk" path="res://Assets/SVGs/tileset_bkgnd-Sheet.png" id="1_vibxp"]
 [ext_resource type="Texture2D" uid="uid://ckk6dcf2bpdvo" path="res://Assets/SVGs/Dirt_Cracked_02_Brown_1.png" id="2_1lao1"]
 
