@@ -6,13 +6,15 @@ var is_dragging = false
 var drag_start = Vector2.ZERO
 var drag_end = Vector2.ZERO
 
+
 func _ready():
 	continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
 	linear_damp = 0.075
 	var mat = PhysicsMaterial.new()
-	mat.friction = 0.0
+	mat.friction = 0.3
 	mat.bounce = 0.4
 	physics_material_override = mat
+	input_pickable = true
 
 # Tuning parameters
 var max_power = 1000  # max launch force
