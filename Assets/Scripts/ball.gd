@@ -14,6 +14,7 @@ func _ready():
 	mat.friction = 0.3
 	mat.bounce = 0.4
 	physics_material_override = mat
+	input_pickable = true
 
 # Tuning parameters
 var max_power = 1000  # max launch force

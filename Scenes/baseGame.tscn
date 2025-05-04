@@ -11,7 +11,6 @@
 
 [node name="Player" parent="." instance=ExtResource("4_g1nqv")]
 position = Vector2(145, 27)
-script = null
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 offset = Vector2(0, -100)
