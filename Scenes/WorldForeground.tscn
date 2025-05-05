@@ -16,9 +16,8 @@ shader_parameter/scale_water = 0.00694444
 shader_parameter/scale_grass = 0.00694444
 shader_parameter/difference = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p70al"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ty0gk"]
 texture = ExtResource("2_j0p05")
-separation = Vector2i(5, 0)
 3:0/0 = 0
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 8, -8, 8, 8, -8, 8)
 4:0/0 = 0
@@ -57,7 +56,7 @@ separation = Vector2i(5, 0)
 
 [sub_resource type="TileSet" id="TileSet_5nsto"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_p70al")
+sources/0 = SubResource("TileSetAtlasSource_ty0gk")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gjpho"]
 texture = ExtResource("2_5nsto")

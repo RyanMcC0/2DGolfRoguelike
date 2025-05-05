@@ -6,7 +6,6 @@ var is_dragging = false
 var drag_start = Vector2.ZERO
 var drag_end = Vector2.ZERO
 
-
 func _ready():
 	continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
 	linear_damp = 0.075
@@ -17,25 +16,36 @@ func _ready():
 	input_pickable = true
 
 # Tuning parameters
-var max_power = 1000  # max launch force
-var power_multiplier = 5  # tweak this to make dragging feel right
-var velocity_clamp = 4 # this is a linear_velocity.length_squared() limit.
+var max_power = 1000 # max launch force
+var power_multiplier = 5 # tweak this to make dragging feel right
+var velocity_clamp = 8 # this is a linear_velocity.length_squared() limit.
 
 func _physics_process(delta: float) -> void:
 	if (linear_velocity.length_squared() < velocity_clamp):
-		linear_velocity = Vector2.ZERO 
+		linear_velocity = Vector2.ZERO
+		launched = false
 
 # Handles input on actual node... CollisionShape2D here.
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
-	if (linear_velocity.length_squared() > velocity_clamp):  # Prevent dragging if the ball is moving
+	if (linear_velocity.length_squared() > velocity_clamp): # Prevent dragging if the ball is moving
 		return
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT):
 		is_dragging = true
 		drag_start = self.global_position
 		drag_end = drag_start
+	if (drag_end and not is_dragging):
+		launched = true
 
 func _input(event):
-	if (linear_velocity.length_squared() > velocity_clamp):  # Prevent dragging or launching if the ball is moving
+	# Spin mechanic
+	if (launched and not is_dragging and event is InputEventKey and event.pressed):
+		if Input.is_action_pressed("rotate_left"):
+			apply_torque_impulse(-1000)
+		if Input.is_action_pressed("rotate_right"):
+			apply_torque_impulse(1000)
+			
+	# Prevent dragging or launching if the ball is moving
+	if (linear_velocity.length_squared() > velocity_clamp):
 		return
 	if not is_dragging:
 		return
@@ -56,13 +66,16 @@ func _input(event):
 			queue_redraw()
 
 func launch_ball():
+	launched = true
 	var drag_vector = drag_start - drag_end
 	var power = drag_vector.length() * power_multiplier
 	power = clamp(power, 0, max_power)
 
 	var direction = drag_vector.normalized()
 	apply_central_impulse(direction * power)
-	
+	drag_end = Vector2.ZERO
+	drag_start = Vector2.ZERO
+
 
 func _draw():
 	if is_dragging:
