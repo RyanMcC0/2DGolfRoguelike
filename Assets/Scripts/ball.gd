@@ -10,7 +10,7 @@ func _ready():
 	continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
 	linear_damp = 0.075
 	var mat = PhysicsMaterial.new()
-	mat.friction = 0.3
+	mat.friction = 0.4
 	mat.bounce = 0.4
 	physics_material_override = mat
 	input_pickable = true
@@ -79,12 +79,35 @@ func launch_ball():
 
 func _draw():
 	if is_dragging:
-		var drag_vector = drag_end - drag_start
-		var mirrored_drag_end = drag_start - drag_vector
+		var drag_vector = drag_start - drag_end
+		var power = drag_vector.length() * power_multiplier
+		power = clamp(power, 0, max_power)
+		var direction = drag_vector.normalized()
 
-		# Convert to local space using the ball's global transform
-		var local_drag_start = to_local(drag_start)
-		var local_mirrored_drag_end = to_local(mirrored_drag_end)
+		# Convert force to initial velocity
+		var initial_velocity = (power / self.mass) * direction
 
-		# Draw only the mirrored line
-		draw_line(local_drag_start, local_mirrored_drag_end, Color.RED, 2)
+		# Calculate the trajectory points
+		var points = []
+		var gravity = ProjectSettings.get("physics/2d/default_gravity")
+		var time_step = 0.05
+		var max_time = 2.0 # Adjust this to control the length of the arc
+		var start_color = Color(0, 1, 0) # Green
+		var end_color = Color(1, 0, 0)   # Red
+
+
+		for t in range(0, int(max_time / time_step)):
+			var time = t * time_step
+			var position = initial_velocity * time + 0.5 * Vector2(0, gravity) * time * time
+			points.append(to_local(drag_start + position))
+
+		for i in range(points.size() - 1):
+			var t = float(i) / (points.size() - 1)
+			var color = Color(
+				lerp(start_color.r, end_color.r, t),
+				lerp(start_color.g, end_color.g, t),
+				lerp(start_color.b, end_color.b, t),
+				lerp(start_color.a, end_color.a, t)
+			)
+			color.a = 1.0 - t # Fade out
+			draw_dashed_line(points[i], points[i + 1], color, 4, 10)

@@ -76,6 +76,12 @@ func draw_level() -> void:
 			if tilemap.get_cell_atlas_coords(Vector2(x, y)) != Vector2i(1, 0):
 				tilemap.set_cell(Vector2i(x, y), 0, Vector2i(2, 0))  # Adding water level
 
+	# Replace water tiles at the bottom of the level with water dirt tiles
+	for x in range(heightmap.size()):
+		var bottom_y = MAX_MAP_HEIGHT - 1
+		if tilemap.get_cell_atlas_coords(Vector2i(x, bottom_y)) == Vector2i(2, 0):  # Water tile
+			tilemap.set_cell(Vector2i(x, bottom_y), 0, Vector2i(16, 0))  # Replace with water dirt tile index
+
 	# Add slants for water and dirt transitions
 	for x in range(heightmap.size()):
 		for y in range(MAX_MAP_HEIGHT - WATER_LEVEL, MAX_MAP_HEIGHT):
