@@ -18,6 +18,7 @@ shader_parameter/difference = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ty0gk"]
 texture = ExtResource("2_j0p05")
+separation = Vector2i(5, 0)
 3:0/0 = 0
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 8, -8, 8, 8, -8, 8)
 4:0/0 = 0
