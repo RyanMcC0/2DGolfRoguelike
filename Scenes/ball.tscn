@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://m2nfo0106ewy"]
+
+[ext_resource type="Texture2D" uid="uid://buf8rlp353ib6" path="res://Assets/Textures/texture_06.png" id="1_x8fbi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_41u45"]
+albedo_texture = ExtResource("1_x8fbi")
+
+[sub_resource type="SphereMesh" id="SphereMesh_cbx31"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ktgx5"]
+radius = 0.1
+
+[node name="Ball" type="RigidBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_41u45")
+mesh = SubResource("SphereMesh_cbx31")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ktgx5")

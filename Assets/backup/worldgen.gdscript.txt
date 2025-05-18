@@ -1,0 +1,94 @@
+extends Node3D
+
+@export var green_size: Vector2 = Vector2(20, 20) # Size of the green (width, height)
+@export var green_height: float = 10.0 # Maximum height variation
+@export var noise_scale: float = 0.5 # Scale of the noise
+@export var green_texture: Texture2D # Texture for the green
+@export var uv_scale: float = 10.0 # UV scaling factor for texture repetition
+
+var noise: FastNoiseLite
+
+func _ready():
+	noise = FastNoiseLite.new()
+	noise.seed = randi() # Randomize the seed for different results each time
+	var mesh = generate_green_mesh()
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = mesh
+
+	# Create a material and assign the texture
+	if green_texture:
+		var material = StandardMaterial3D.new()
+		material.albedo_texture = green_texture
+		mesh_instance.material_override = material
+
+	add_child(mesh_instance)
+
+	# Add a collider
+	var collision_shape = CollisionShape3D.new()
+	var concave_shape = ConcavePolygonShape3D.new()
+	concave_shape.data = mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX] # Use the vertices of the mesh
+	collision_shape.shape = concave_shape
+	add_child(collision_shape)
+
+func generate_green_mesh() -> ArrayMesh:
+	var array_mesh = ArrayMesh.new()
+	var surface_tool = SurfaceTool.new()
+	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+	for x in range(green_size.x - 1):
+		for y in range(green_size.y - 1):
+			# Generate noise values
+			var raw_height00 = noise.get_noise_2d(x * noise_scale, y * noise_scale)
+			var raw_height01 = noise.get_noise_2d(x * noise_scale, (y + 1) * noise_scale)
+			var raw_height10 = noise.get_noise_2d((x + 1) * noise_scale, y * noise_scale)
+			var raw_height11 = noise.get_noise_2d((x + 1) * noise_scale, (y + 1) * noise_scale)
+
+			# Apply thresholding for plateaus
+			var height00 = apply_plateau(raw_height00) * green_height
+			var height01 = apply_plateau(raw_height01) * green_height
+			var height10 = apply_plateau(raw_height10) * green_height
+			var height11 = apply_plateau(raw_height11) * green_height
+
+			var v0 = Vector3(x, height00, y)
+			var v1 = Vector3(x, height01, y + 1)
+			var v2 = Vector3(x + 1, height10, y)
+			var v3 = Vector3(x + 1, height11, y + 1)
+
+			# UV coordinates for texture mapping
+			var uv0 = Vector2(x / green_size.x * uv_scale, y / green_size.y * uv_scale)
+			var uv1 = Vector2(x / green_size.x * uv_scale, (y + 1) / green_size.y * uv_scale)
+			var uv2 = Vector2((x + 1) / green_size.x * uv_scale, y / green_size.y * uv_scale)
+			var uv3 = Vector2((x + 1) / green_size.x * uv_scale, (y + 1) / green_size.y * uv_scale)
+
+			# First triangle
+			surface_tool.set_uv(uv0)
+			surface_tool.add_vertex(v0)
+			surface_tool.set_uv(uv2)
+			surface_tool.add_vertex(v2)
+			surface_tool.set_uv(uv1)
+			surface_tool.add_vertex(v1)
+
+			# Second triangle
+			surface_tool.set_uv(uv1)
+			surface_tool.add_vertex(v1)
+			surface_tool.set_uv(uv2)
+			surface_tool.add_vertex(v2)
+			surface_tool.set_uv(uv3)
+			surface_tool.add_vertex(v3)
+
+	# Automatically generate normals and tangents
+	surface_tool.generate_normals()
+	surface_tool.generate_tangents()
+
+	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_tool.commit_to_arrays())
+	return array_mesh
+
+# Helper function to create plateaus
+func apply_plateau(noise_value: float) -> float:
+# Define thresholds for plateaus
+	if noise_value < -0.2:
+		return -0.2 # Lower plateau
+	elif noise_value > 0.2:
+		return 0.2 # Upper plateau
+	else:
+		return noise_value # Keep slopes in between
