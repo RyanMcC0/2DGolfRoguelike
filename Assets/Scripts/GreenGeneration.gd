@@ -6,6 +6,7 @@ extends Node3D
 @export var green_texture: Texture2D # Texture for the green
 @export var uv_scale: float = 10.0 # UV scaling factor for texture repetition
 @export var radius: float = 10.0 # Radius of the circular green
+@export var friction: float = 0.0 #Friction of green
 
 var noise: FastNoiseLite
 
@@ -104,7 +105,24 @@ func create_vertex(x: float, height: float, z: float, center_x: float, center_y:
 	var dz = z - center_y
 	var distance = Vector2(dx, dz).length()
 	
-	# For vertices near the edge of the circle, pull them outward to form a smooth circle
+	# Get direction to the center
+	var direction_to_center = Vector2(-dx, -dz).normalized()
+	var inner_distance = 0.2 * radiusLoc  # How far to look inward for height reference
+	
+	if distance > radiusLoc * 0.8:
+		# For edge vertices, sample the height from a point closer to the center
+		var inner_x = x + direction_to_center.x * inner_distance
+		var inner_z = z + direction_to_center.y * inner_distance
+		
+		# Sample noise at the inner position (simulating what the height would be there)
+		var inner_noise = noise.get_noise_2d(inner_x * noise_scale, inner_z * noise_scale)
+		var inner_height = apply_plateau(inner_noise) * green_height
+		
+		# The closer to the edge, the more we use the inner height
+		var blend_factor = min(1.0, (distance - radiusLoc * 0.8) / (radiusLoc * 0.2))
+		height = lerp(height, inner_height * 0.5, blend_factor)  # Reduce height by 50% for smoother edges
+	
+	# Now handle the position adjustment
 	if distance > radiusLoc * 0.8 and distance < radiusLoc:
 		var direction = Vector2(dx, dz).normalized()
 		var new_x = center_x + direction.x * radiusLoc
